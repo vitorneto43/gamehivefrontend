@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import GameCard from '../GameCard/GameCard';
 import styles from '../../App.module.css';
 
 function Home({ refreshTrigger }) {
@@ -23,7 +22,32 @@ function Home({ refreshTrigger }) {
 
   useEffect(() => {
     fetchGames();
-  }, [refreshTrigger]); // Atualiza sempre que refreshTrigger muda
+  }, [refreshTrigger]);
+
+  const handleBuy = async (gameId) => {
+    try {
+      const res = await fetch('https://game-hive.onrender.com/create-checkout-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          // Authorization: `Bearer ${auth.token}` (se precisar)
+        },
+        body: JSON.stringify({ gameId }),
+      });
+
+      const data = await res.json();
+      console.log(data); // Debug pra saber se veio a URL
+
+      if (res.ok && data.url) {
+        window.location.href = data.url;
+      } else {
+        alert(data.error || 'Erro ao criar sessão de pagamento');
+      }
+    } catch (err) {
+      console.error('Erro ao iniciar compra:', err);
+      alert('Erro ao iniciar compra');
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -38,12 +62,20 @@ function Home({ refreshTrigger }) {
               <p>🚀 Nenhum jogo publicado ainda!</p>
             ) : (
               games.map((game) => (
-                <GameCard
-                  key={game._id}
-                  title={game.title}
-                  description={game.description}
-                  image={`https://game-hive.onrender.com${game.imageUrl}`}
-                />
+                <div key={game._id} className={styles.card}>
+                  <img
+                    src={`https://game-hive.onrender.com${game.imageUrl}`}
+                    alt={game.title}
+                    className={styles.image}
+                  />
+                  <h3>{game.title}</h3>
+                  <p>{game.description}</p>
+                  <p>R$ {game.price}</p>
+
+                  <button onClick={() => handleBuy(game._id)} className={styles.button}>
+                    Jogar
+                  </button>
+                </div>
               ))
             )}
           </div>
@@ -52,6 +84,9 @@ function Home({ refreshTrigger }) {
     </div>
   );
 }
+
+export default Home;
+
 
 export default Home;
 

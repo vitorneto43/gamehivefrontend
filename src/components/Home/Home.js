@@ -42,7 +42,7 @@ function Home({ refreshTrigger }) {
                   key={game._id}
                   title={game.title}
                   description={game.description}
-                  image={`http://localhost:5000${game.imageUrl}`}
+                  image={`https://game-hive.onrender.com${game.imageUrl}`}
                 />
               ))
             )}

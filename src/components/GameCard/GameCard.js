@@ -1,7 +1,8 @@
-import React from 'react';
-import styles from './GameCard.module.css';
-
 function GameCard({ game, auth }) {
+  if (!game) {
+    return <p>Erro ao carregar jogo.</p>; // Ou um loading
+  }
+
   const handleBuy = async () => {
     if (!auth?.token) {
       alert('Você precisa estar logado para comprar!');
@@ -23,7 +24,7 @@ function GameCard({ game, auth }) {
       }
 
       const data = await res.json();
-      window.location.href = data.url; // redireciona para o checkout do Stripe
+      window.location.href = data.url;
     } catch (err) {
       console.error(err);
       alert('Erro ao iniciar o pagamento!');
@@ -32,11 +33,14 @@ function GameCard({ game, auth }) {
 
   return (
     <div className={styles.card}>
-      <img
-        src={`https://game-hive.onrender.com${game.imageUrl}`}
-        alt={game.title}
-        className={styles.cardImage}
-      />
+      {game.imageUrl && (
+        <img
+          src={`https://game-hive.onrender.com${game.imageUrl}`}
+          alt={game.title}
+          className={styles.cardImage}
+        />
+      )}
+
       <h3 className={styles.cardTitle}>{game.title}</h3>
       <p className={styles.cardDescription}>{game.description}</p>
       <p className={styles.cardPrice}>R$ {game.price.toFixed(2)}</p>
@@ -47,8 +51,6 @@ function GameCard({ game, auth }) {
     </div>
   );
 }
-
-export default GameCard;
 
 
 

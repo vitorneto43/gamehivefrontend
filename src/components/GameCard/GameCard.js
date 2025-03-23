@@ -2,21 +2,26 @@ import React from 'react';
 
 const GameCard = ({ title, description, image, onBuy }) => {
   return (
-    <div className="bg-[#111] border border-[#333] rounded-2xl shadow-lg p-4 w-[300px] transition transform hover:scale-105 hover:border-purple-600">
-      <div className="h-48 rounded-lg overflow-hidden mb-4">
+    <div className="flex flex-col bg-[#1a1a1a] border border-[#333] rounded-xl shadow-md p-4 w-full max-w-xs mx-auto transition-transform hover:scale-105 hover:border-purple-600">
+      <div className="rounded-lg overflow-hidden h-48 mb-4">
         <img
           src={image}
           alt={title}
-          className="w-full h-full object-cover"
+          className="object-cover w-full h-full"
         />
       </div>
 
-      <h3 className="text-purple-500 text-xl font-bold mb-2">{title}</h3>
-      <p className="text-gray-400 text-sm mb-4">{description}</p>
+      <h3 className="text-purple-400 text-lg font-semibold mb-2 text-center">
+        {title}
+      </h3>
+
+      <p className="text-gray-400 text-sm mb-4 text-center">
+        {description}
+      </p>
 
       <button
         onClick={onBuy}
-        className="w-full bg-purple-600 text-white py-2 rounded-xl hover:bg-purple-700 transition"
+        className="bg-purple-600 hover:bg-purple-700 text-white text-sm py-2 px-4 rounded-lg transition-all"
       >
         Jogar / Comprar
       </button>
@@ -25,4 +30,5 @@ const GameCard = ({ title, description, image, onBuy }) => {
 };
 
 export default GameCard;
+
 

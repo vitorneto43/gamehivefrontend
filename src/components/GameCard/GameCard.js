@@ -37,12 +37,14 @@ function GameCard({ game, auth }) {
 
   return (
     <div className={styles.card}>
-      {game.imageUrl && (
+      {game.imageUrl ? (
         <img
           src={`https://game-hive.onrender.com${game.imageUrl}`}
           alt={game.title}
           className={styles.cardImage}
         />
+      ) : (
+        <p>Sem imagem disponível</p>
       )}
 
       <h3 className={styles.cardTitle}>{game.title}</h3>
@@ -57,6 +59,7 @@ function GameCard({ game, auth }) {
 }
 
 export default GameCard;
+
 
 
 

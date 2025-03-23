@@ -31,7 +31,7 @@ function UploadGameForm({ auth, onClose, onUploaded }) {
     }
   
     try {
-      const res = await fetch('https://game-hive-1.onrender.com/games/upload', {
+      const res = await fetch('https://game-hive.onrender.com/games/upload', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${auth.token}`, // ✅ Apenas o token vai no header!

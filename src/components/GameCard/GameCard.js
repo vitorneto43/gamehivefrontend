@@ -1,10 +1,10 @@
 import React from 'react';
-import styles from './GameCard.module.css'; // Supondo que você já tenha o CSS correto
+import styles from './GameCard.module.css';
 
 function GameCard({ game, auth }) {
-  // Evita erros de game não definido
   if (!game) {
-    return <p>Erro ao carregar o jogo.</p>;
+    console.log('Game inválido:', game);
+    return <p>Erro ao carregar jogo.</p>;
   }
 
   const handleBuy = async () => {
@@ -28,7 +28,7 @@ function GameCard({ game, auth }) {
       }
 
       const data = await res.json();
-      window.location.href = data.url; // Redireciona para o checkout
+      window.location.href = data.url;
     } catch (err) {
       console.error(err);
       alert('Erro ao iniciar o pagamento!');
@@ -37,19 +37,17 @@ function GameCard({ game, auth }) {
 
   return (
     <div className={styles.card}>
-      {game.imageUrl ? (
+      {game.imageUrl && (
         <img
           src={`https://game-hive.onrender.com${game.imageUrl}`}
           alt={game.title}
           className={styles.cardImage}
         />
-      ) : (
-        <div className={styles.placeholderImage}>Imagem não disponível</div>
       )}
 
       <h3 className={styles.cardTitle}>{game.title}</h3>
       <p className={styles.cardDescription}>{game.description}</p>
-      <p className={styles.cardPrice}>R$ {game.price?.toFixed(2)}</p>
+      <p className={styles.cardPrice}>R$ {game.price.toFixed(2)}</p>
 
       <button onClick={handleBuy} className={styles.cardButton}>
         Jogar / Comprar
@@ -59,6 +57,7 @@ function GameCard({ game, auth }) {
 }
 
 export default GameCard;
+
 
 
 

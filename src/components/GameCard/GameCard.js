@@ -1,28 +1,28 @@
 import React from 'react';
+import { FaGamepad } from 'react-icons/fa';
 
-const GameCard = ({ title, description, image, onBuy }) => {
+const GameCard = ({ title, description, image, onPlay }) => {
   return (
-    <div className="bg-[#111] rounded-xl border border-purple-700 shadow-lg overflow-hidden max-w-sm w-full mx-auto transition-transform hover:scale-105">
-      {/* Imagem */}
-      <div className="h-48 w-full overflow-hidden">
+    <div className="flex flex-col bg-gray-800 text-white rounded-2xl overflow-hidden shadow-lg transition-transform hover:scale-105">
+      <div className="h-40 overflow-hidden">
         <img
           src={image}
           alt={title}
-          className="object-cover w-full h-full transition-transform duration-300 hover:scale-110"
+          className="w-full h-full object-cover"
         />
       </div>
 
-      {/* Conteúdo */}
-      <div className="p-5 flex flex-col justify-between h-[240px]">
-        <h2 className="text-2xl font-bold text-purple-400 text-center mb-3">{title}</h2>
-
-        <p className="text-gray-300 text-sm text-center mb-4 line-clamp-3">{description}</p>
+      <div className="flex flex-col justify-between p-4 flex-grow">
+        <div>
+          <h3 className="text-lg font-bold text-purple-400 mb-2 text-center">{title}</h3>
+          <p className="text-xs text-gray-300 text-center">{description}</p>
+        </div>
 
         <button
-          onClick={onBuy}
-          className="bg-gradient-to-r from-purple-700 to-purple-900 hover:from-purple-800 hover:to-purple-950 text-white font-semibold py-2 px-4 rounded-md shadow-md transition-transform hover:scale-105 focus:outline-none"
+          onClick={onPlay}
+          className="flex items-center justify-center mt-4 bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-3 rounded-lg transition-all text-sm"
         >
-          Jogar Agora 🎮
+          <FaGamepad className="mr-2" /> Jogar Agora
         </button>
       </div>
     </div>

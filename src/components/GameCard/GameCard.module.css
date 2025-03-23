@@ -1,52 +1,47 @@
 .card {
-    background-color: #1e1e1e;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-  }
-  
-  .image {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-  }
-  
-  .content {
-    padding: 15px;
-    color: #fff;
-  }
-  
-  .content h3 {
-    margin-bottom: 10px;
-    color: #8a2be2; /* Roxo vibrante */
-    font-size: 1.5rem;
-  }
-  
-  .content p {
-    color: #aaa;
-    margin-bottom: 15px;
-  }
-  
-  .playButton {
-    background-color: #8a2be2;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    width: 100%;
-  }
-  
-  .playButton:hover {
-    background-color: #6b1fbf;
-  }
+  width: 300px;            /* Define o tamanho do card */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #fff;
+  text-align: center;
+  box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.image {
+  width: 100%;
+  height: 200px;            /* Altura fixa para a imagem */
+  object-fit: cover;        /* Mantém proporção e cobre a área sem esticar */
+}
+
+.title {
+  font-size: 1.2rem;
+  margin: 10px 0 5px;
+}
+
+.description {
+  font-size: 0.9rem;
+  padding: 0 10px;
+  color: #555;
+}
+
+.button {
+  margin: 10px 0 20px;
+  padding: 8px 16px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+
   

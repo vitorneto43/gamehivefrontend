@@ -1,47 +1,63 @@
+/* GameCard.module.css */
+
 .card {
-  width: 300px;            /* Define o tamanho do card */
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  background-color: #111; /* Dark background */
+  color: #fff;
+  border: 1px solid #333;
+  border-radius: 12px;
   overflow: hidden;
-  background-color: #fff;
-  text-align: center;
-  box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
-  transition: transform 0.2s ease;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin: 10px;
 }
 
 .card:hover {
   transform: translateY(-5px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5);
 }
 
 .image {
+  height: 150px;
+  object-fit: cover;
   width: 100%;
-  height: 200px;            /* Altura fixa para a imagem */
-  object-fit: cover;        /* Mantém proporção e cobre a área sem esticar */
+  border-bottom: 1px solid #333;
+}
+
+.content {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .title {
   font-size: 1.2rem;
-  margin: 10px 0 5px;
+  font-weight: bold;
+  color: #a259ff;
+  margin-bottom: 8px;
 }
 
 .description {
   font-size: 0.9rem;
-  padding: 0 10px;
-  color: #555;
+  color: #aaa;
+  flex-grow: 1;
 }
 
 .button {
-  margin: 10px 0 20px;
-  padding: 8px 16px;
+  margin-top: 12px;
+  background-color: #a259ff;
+  color: #fff;
   border: none;
-  background-color: #007bff;
-  color: white;
-  border-radius: 4px;
+  border-radius: 8px;
+  padding: 10px;
+  font-weight: bold;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .button:hover {
-  background-color: #0056b3;
+  background-color: #8a3dff;
 }
 
-  

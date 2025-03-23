@@ -81,7 +81,7 @@ function Dashboard() {
             <tbody>
               {games.map((game) => (
                 <tr key={game._id}>
-                  <td><img src={`http://localhost:5000${game.imageUrl}`} alt={game.title} style={{ width: '100px' }} /></td>
+                  <td><img src={`https://game-hive.onrender.com${game.imageUrl}`} alt={game.title} style={{ width: '100px' }} /></td>
                   <td>{game.title}</td>
                   <td>R$ {game.price.toFixed(2)}</td>
                   <td>{game.sales || 0}</td>

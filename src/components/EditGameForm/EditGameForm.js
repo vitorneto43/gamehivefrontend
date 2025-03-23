@@ -19,7 +19,7 @@ function EditGameForm({ game, auth, onClose, onUpdated }) {
     if (gameFile) formData.append('gameFile', gameFile); // só se enviar o executável novo
 
     try {
-      const res = await fetch(`https://game-hive-1.onrender.com/games/${game._id}`, {
+      const res = await fetch(`https://game-hive.onrender.com/games/${game._id}`, {
         method: 'PUT',
         headers: {
           Authorization: `Bearer ${auth.token}`

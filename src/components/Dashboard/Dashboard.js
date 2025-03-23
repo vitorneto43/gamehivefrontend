@@ -32,7 +32,33 @@ function Dashboard() {
 
   useEffect(() => {
     fetchGames();
-  }, [auth]); // Atualiza os jogos sempre que o usuário mudar
+  }, [auth]);
+
+  // Função para excluir um jogo
+  const handleDeleteGame = async (gameId) => {
+    const confirmDelete = window.confirm('Tem certeza que deseja excluir este jogo?');
+    if (!confirmDelete) return;
+
+    try {
+      const res = await fetch(`https://game-hive.onrender.com/games/${gameId}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${auth.token}`,
+        },
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.error || 'Erro ao excluir o jogo');
+      }
+
+      alert('✅ Jogo excluído com sucesso!');
+      fetchGames(); // Atualiza a lista após excluir
+    } catch (err) {
+      console.error(err);
+      alert('❌ Erro ao excluir o jogo!');
+    }
+  };
 
   return (
     <div className={styles.dashboardContainer}>
@@ -81,15 +107,21 @@ function Dashboard() {
             <tbody>
               {games.map((game) => (
                 <tr key={game._id}>
-                  <td><img src={`https://game-hive.onrender.com${game.imageUrl}`} alt={game.title} style={{ width: '100px' }} /></td>
+                  <td>
+                    <img
+                      src={`https://game-hive.onrender.com${game.imageUrl}`}
+                      alt={game.title}
+                      style={{ width: '100px' }}
+                    />
+                  </td>
                   <td>{game.title}</td>
                   <td>R$ {game.price.toFixed(2)}</td>
                   <td>{game.sales || 0}</td>
                   <td>R$ {(game.price * (game.sales || 0)).toFixed(2)}</td>
                   <td>R$ {(game.price * (game.sales || 0) * 0.9).toFixed(2)}</td>
                   <td>
-                    <button onClick={() => setEditingGame(game)}>Editar</button>
-                    <button onClick={() => console.log(`Excluir ${game._id}`)}>Excluir</button>
+                    <button onClick={() => setEditingGame(game)}>✏️ Editar</button>
+                    <button onClick={() => handleDeleteGame(game._id)}>🗑️ Excluir</button>
                   </td>
                 </tr>
               ))}
@@ -102,6 +134,7 @@ function Dashboard() {
 }
 
 export default Dashboard;
+
 
 
 

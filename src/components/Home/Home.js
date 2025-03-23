@@ -9,7 +9,7 @@ function Home({ refreshTrigger }) {
   const fetchGames = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/games');
+      const res = await fetch('https://game-hive.onrender.com/games');
       if (!res.ok) throw new Error('Erro ao buscar jogos da vitrine');
 
       const data = await res.json();

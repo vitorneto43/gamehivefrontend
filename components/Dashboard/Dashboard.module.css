@@ -1,0 +1,63 @@
+.dashboardContainer {
+    padding: 40px;
+    color: #fff;
+    background-color: #121212;
+    min-height: 100vh;
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2rem;
+  }
+  
+  .summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+  
+  .card, .cardHighlight {
+    background-color: #1f1f1f;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+  }
+  
+  .cardHighlight {
+    background-color: #8a2be2;
+  }
+  
+  .cardHighlight h3, .cardHighlight p {
+    color: #fff;
+  }
+  
+  .card h3, .cardHighlight h3 {
+    margin-bottom: 10px;
+  }
+  
+  .gameTable {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .gameTable th,
+  .gameTable td {
+    padding: 12px 15px;
+    border: 1px solid #333;
+    text-align: center;
+  }
+  
+  .gameTable th {
+    background-color: #1f1f1f;
+  }
+  
+  .gameTable tr:nth-child(even) {
+    background-color: #1a1a1a;
+  }
+  
+  .gameTable tr:hover {
+    background-color: #333;
+  }
+  

@@ -15,7 +15,7 @@ function Dashboard() {
     if (!auth?.token) return;
 
     try {
-      const res = await fetch('https://game-hive-1.onrender.com/games/me', {
+      const res = await fetch('https://game-hive.onrender.com/games/me', {
         headers: { Authorization: `Bearer ${auth.token}` },
       });
 
@@ -40,7 +40,7 @@ function Dashboard() {
     if (!confirmDelete) return;
 
     try {
-      const res = await fetch(`https://game-hive-1.onrender.com/games/${gameId}`, {
+      const res = await fetch(`https://game-hive.onrender.com/games/${gameId}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${auth.token}`,

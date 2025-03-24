@@ -14,7 +14,7 @@ function GameCard({ game, auth }) {
     }
 
     try {
-      const res = await fetch('https://game-hive-1.onrender.com/create-checkout-session', {
+      const res = await fetch('https://game-hive.onrender.com/create-checkout-session', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

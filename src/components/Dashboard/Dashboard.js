@@ -109,7 +109,7 @@ function Dashboard() {
                 <tr key={game._id}>
                   <td>
                     <img
-                      src={`https://game-hive-1.onrender.com${game.imageUrl}`}
+                      src={`https://game-hive.onrender.com${game.imageUrl}`}
                       alt={game.title}
                       style={{ width: '100px' }}
                     />

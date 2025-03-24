@@ -78,3 +78,39 @@
 .cancel-button:hover {
   background-color: #666;
 }
+
+@media (max-width: 480px) {
+  .upload-form {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .upload-form input,
+  .upload-form textarea {
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .upload-form h2 {
+    font-size: 20px;
+  }
+
+  .upload-form label {
+    font-size: 13px;
+  }
+
+  .upload-form button {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .button-group {
+    flex-direction: column;
+  }
+
+  .upload-form button {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+}
+

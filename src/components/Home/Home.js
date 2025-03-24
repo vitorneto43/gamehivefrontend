@@ -10,7 +10,7 @@ function Home() {
 
   const fetchGames = async () => {
     try {
-      const res = await fetch('https://game-hive-1.onrender.com/games');
+      const res = await fetch('https://game-hive.onrender.com/games');
       if (!res.ok) throw new Error('Erro ao buscar jogos');
 
       const data = await res.json();

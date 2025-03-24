@@ -4,6 +4,8 @@ import UploadGameForm from '../UploadGameForm/UploadGameForm';
 import EditGameForm from '../EditGameForm/EditGameForm';
 import styles from './Dashboard.module.css';
 
+const API_URL = 'https://game-hive.onrender.com';
+
 function Dashboard() {
   const { auth } = useContext(AuthContext);
   const [games, setGames] = useState([]);
@@ -12,19 +14,32 @@ function Dashboard() {
   const [editingGame, setEditingGame] = useState(null);
 
   const fetchGames = async () => {
-    if (!auth?.token) return;
+    if (!auth?.token) {
+      console.warn('⚠️ Nenhum token encontrado. A requisição foi cancelada.');
+      return;
+    }
+
+    console.log('📡 Buscando jogos com token:', auth.token);
 
     try {
-      const res = await fetch('https://game-hive.onrender.com/games/me', {
-        headers: { Authorization: `Bearer ${auth.token}` },
+      const res = await fetch(`${API_URL}/games/me`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${auth.token}`,
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
       });
 
-      if (!res.ok) throw new Error('Erro ao buscar jogos');
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.error || 'Erro ao buscar jogos');
+      }
 
       const data = await res.json();
       setGames(data);
     } catch (err) {
-      console.error(err);
+      console.error('❌ Erro ao buscar jogos:', err);
     } finally {
       setLoading(false);
     }
@@ -34,16 +49,20 @@ function Dashboard() {
     fetchGames();
   }, [auth]);
 
-  // Função para excluir um jogo
   const handleDeleteGame = async (gameId) => {
+    if (!auth?.token) {
+      alert('❌ Você precisa estar autenticado para excluir um jogo.');
+      return;
+    }
+
     const confirmDelete = window.confirm('Tem certeza que deseja excluir este jogo?');
     if (!confirmDelete) return;
 
     try {
-      const res = await fetch(`https://game-hive.onrender.com/games/${gameId}`, {
+      const res = await fetch(`${API_URL}/games/${gameId}`, {
         method: 'DELETE',
         headers: {
-          Authorization: `Bearer ${auth.token}`,
+          'Authorization': `Bearer ${auth.token}`,
         },
       });
 
@@ -53,10 +72,10 @@ function Dashboard() {
       }
 
       alert('✅ Jogo excluído com sucesso!');
-      fetchGames(); // Atualiza a lista após excluir
+      fetchGames();
     } catch (err) {
-      console.error(err);
-      alert('❌ Erro ao excluir o jogo!');
+      console.error('❌ Erro ao excluir o jogo:', err);
+      alert('❌ Erro ao excluir o jogo! ' + err.message);
     }
   };
 
@@ -109,7 +128,7 @@ function Dashboard() {
                 <tr key={game._id}>
                   <td>
                     <img
-                      src={`https://game-hive.onrender.com${game.imageUrl}`}
+                      src={game.imageUrl.startsWith('http') ? game.imageUrl : `${API_URL}${game.imageUrl}`}
                       alt={game.title}
                       style={{ width: '100px' }}
                     />
@@ -134,6 +153,7 @@ function Dashboard() {
 }
 
 export default Dashboard;
+
 
 
 

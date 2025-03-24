@@ -5,7 +5,7 @@ function EditGameForm({ game, auth, onClose, onUpdated }) {
   const [price, setPrice] = useState(game.price);
   const [description, setDescription] = useState(game.description);
   const [image, setImage] = useState(null);
-  const [gameFile, setGameFile] = useState(null); // NOVO ESTADO para o executável
+  const [gameFile, setGameFile] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,84 +14,139 @@ function EditGameForm({ game, auth, onClose, onUpdated }) {
     formData.append('title', title);
     formData.append('price', price);
     formData.append('description', description);
+    if (image) formData.append('image', image);
+    if (gameFile) formData.append('gameFile', gameFile);
 
-    if (image) formData.append('image', image); // só se trocar a imagem
-    if (gameFile) formData.append('gameFile', gameFile); // só se enviar o executável novo
+    console.log('📤 Enviando dados do form:');
+    for (let pair of formData.entries()) {
+      console.log(`${pair[0]}:`, pair[1]);
+    }
 
     try {
       const res = await fetch(`https://game-hive.onrender.com/games/${game._id}`, {
         method: 'PUT',
         headers: {
-          Authorization: `Bearer ${auth.token}`
+          Authorization: `Bearer ${auth.token}`,
         },
-        body: formData
+        body: formData,
       });
 
-      const data = await res.json();
-      alert(data.message);
+      const text = await res.text();
 
-      onUpdated(); // Atualiza a lista
-      onClose();   // Fecha o form
+      if (res.ok) {
+        const data = JSON.parse(text);
+        alert(data.message || 'Jogo atualizado com sucesso!');
+        onUpdated();
+        onClose();
+      } else {
+        console.error('❌ Erro ao atualizar:', text);
+        alert('Erro ao atualizar o jogo. Veja o console.');
+      }
     } catch (err) {
-      console.error('Erro ao editar jogo:', err);
+      console.error('❌ Erro ao editar jogo:', err);
+      alert('Erro ao editar jogo. Veja o console.');
     }
   };
 
   return (
-    <div style={{ background: '#222', padding: '20px', borderRadius: '8px' }}>
-      <h2>Editando: {game.title}</h2>
+    <div
+      style={{
+        background: '#222',
+        padding: '20px',
+        borderRadius: '8px',
+        maxWidth: '500px',
+        width: '90%',
+        margin: '40px auto',
+        color: '#fff',
+      }}
+    >
+      <h2 style={{ color: '#8e44ad', textAlign: 'center' }}>Editando: {game.title}</h2>
 
       <form onSubmit={handleSubmit}>
+        <label>Título</label>
         <input
           type="text"
           placeholder="Título"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           required
+          style={inputStyle}
         />
-        <br /><br />
 
+        <label>Preço (R$)</label>
         <input
           type="number"
           placeholder="Preço"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
           required
+          style={inputStyle}
         />
-        <br /><br />
 
+        <label>Descrição</label>
         <textarea
           placeholder="Descrição"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           required
+          style={{ ...inputStyle, resize: 'vertical', height: '80px' }}
         />
-        <br /><br />
 
-        {/* Upload da imagem */}
-        <label style={{ color: '#fff' }}>Imagem do jogo:</label>
+        <label>Imagem do Jogo:</label>
         <input
           type="file"
           accept="image/*"
           onChange={(e) => setImage(e.target.files[0])}
+          style={inputStyle}
         />
-        <br /><br />
 
-        {/* Upload do executável ou arquivo zipado */}
-        <label style={{ color: '#fff' }}>Arquivo do jogo (exe/zip/rar):</label>
+        <label>Arquivo do Jogo (exe/zip/rar):</label>
         <input
           type="file"
           accept=".zip,.rar,.exe"
           onChange={(e) => setGameFile(e.target.files[0])}
+          style={inputStyle}
         />
-        <br /><br />
 
-        <button type="submit">Salvar Alterações</button>
-        <button type="button" onClick={onClose} style={{ marginLeft: '10px' }}>Cancelar</button>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
+          <button
+            type="submit"
+            style={{ ...buttonStyle, backgroundColor: '#8e44ad' }}
+          >
+            Salvar
+          </button>
+          <button
+            type="button"
+            onClick={onClose}
+            style={{ ...buttonStyle, backgroundColor: '#666' }}
+          >
+            Cancelar
+          </button>
+        </div>
       </form>
     </div>
   );
 }
 
+const inputStyle = {
+  width: '100%',
+  padding: '10px',
+  marginBottom: '15px',
+  borderRadius: '6px',
+  backgroundColor: '#333',
+  color: '#fff',
+  border: '1px solid #444',
+};
+
+const buttonStyle = {
+  padding: '10px 20px',
+  color: '#fff',
+  border: 'none',
+  borderRadius: '6px',
+  cursor: 'pointer',
+  fontWeight: 'bold',
+};
+
 export default EditGameForm;
+
 

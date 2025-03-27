@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
-import styles from './MinhasCompras/MinhasCompras.module.css';
+import styles from './MinhasCompras.module.css';
 
 const API_URL = 'https://game-hive.onrender.com';
 

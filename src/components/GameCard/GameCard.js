@@ -14,35 +14,43 @@ function GameCard({ game, auth }) {
       alert('⚠️ Você precisa estar logado para comprar!');
       return;
     }
-
-    console.log('🛒 Iniciando compra (PagSeguro) para o jogo:', game.title, 'ID:', game._id);
-
+  
+    const cpf = prompt('Digite seu CPF (somente números) para gerar a cobrança:');
+    if (!cpf) {
+      alert('CPF obrigatório!');
+      return;
+    }
+  
     try {
-      const res = await fetch(`${API_URL}/pagseguro/checkout`, {
+      const res = await fetch(`${API_URL}/asaas/cobrar`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${auth.token}`,
         },
-        body: JSON.stringify({ gameId: game._id }),
+        body: JSON.stringify({
+          name: auth.username || 'Usuário GameHive',
+          email: auth.email,
+          cpf,
+          value: game.price,
+          description: game.title,
+        }),
       });
-
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.error || 'Erro ao criar sessão no PagSeguro');
-      }
-
+  
       const data = await res.json();
-      console.log('✅ URL de pagamento PagSeguro:', data.url);
-
-      window.location.href = data.url; // Redireciona para o PagSeguro
-
+  
+      if (data.link) {
+        console.log('🔗 Link da cobrança Asaas:', data.link);
+        window.location.href = data.link;
+      } else {
+        alert('Erro ao gerar link de pagamento!');
+      }
     } catch (err) {
-      console.error('❌ Erro ao iniciar o pagamento com PagSeguro:', err);
-      alert(err.message || 'Erro ao iniciar o pagamento!');
+      console.error('❌ Erro ao criar cobrança Asaas:', err);
+      alert('Erro ao iniciar pagamento!');
     }
   };
-
+  
   const imageUrl = game.imageUrl?.startsWith('http')
     ? game.imageUrl
     : `${API_URL}${game.imageUrl}`;
@@ -64,8 +72,9 @@ function GameCard({ game, auth }) {
       <p className={styles.cardPrice}>R$ {game.price.toFixed(2)}</p>
 
       <button onClick={handleBuy} className={styles.cardButton}>
-        Comprar com PagSeguro
+        Comprar com Asaas
       </button>
+
     </div>
   );
 }

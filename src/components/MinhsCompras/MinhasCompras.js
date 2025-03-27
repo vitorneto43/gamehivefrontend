@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
-import styles from './MinhasCompras.module.css';
+import styles from './MinhasCompras.module.css'; // ✅ caminho corrigido
 
 const API_URL = 'https://game-hive.onrender.com';
 
@@ -58,5 +58,6 @@ function MinhasCompras() {
 }
 
 export default MinhasCompras;
+
 
 

@@ -19,13 +19,17 @@ function Header() {
       </h1>
 
       <div className={styles.buttonsContainer}>
-        {(!auth || !auth.token) ? (    // ✅ VERIFICA auth ANTES!
+        {(!auth || !auth.token) ? (
           <>
             <Link to="/login" className={styles.navButton}>Login</Link>
             <Link to="/register" className={styles.navButton}>Cadastro</Link>
           </>
         ) : (
           <>
+            <Link to="/minhas-compras" className={styles.navButton}>
+              Minhas Compras
+            </Link>
+
             <button
               onClick={() => navigate('/dashboard')}
               className={styles.uploadButton}
@@ -47,6 +51,7 @@ function Header() {
 }
 
 export default Header;
+
 
 
 

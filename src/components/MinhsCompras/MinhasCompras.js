@@ -1,3 +1,4 @@
+// MinhasCompras.js
 import React, { useEffect, useState, useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import styles from './MinhasCompras.module.css';
@@ -10,16 +11,13 @@ function MinhasCompras() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!auth?.token) return;
-
     const fetchCompras = async () => {
       try {
         const res = await fetch(`${API_URL}/purchases/me`, {
           headers: {
-            Authorization: `Bearer ${auth.token}`,
+            Authorization: `Bearer ${auth?.token}`,
           },
         });
-
         const data = await res.json();
         setCompras(data);
       } catch (err) {
@@ -29,25 +27,27 @@ function MinhasCompras() {
       }
     };
 
-    fetchCompras();
+    if (auth?.token) fetchCompras();
   }, [auth]);
 
   return (
     <div className={styles.container}>
-      <h2>Minhas Compras 🎮</h2>
+      <h2>🛒 Minhas Compras</h2>
 
       {loading ? (
-        <p>Carregando...</p>
+        <p>Carregando suas compras...</p>
       ) : compras.length === 0 ? (
         <p>Você ainda não comprou nenhum jogo.</p>
       ) : (
-        <table className={styles.table}>
+        <table className={styles.tabela}>
           <thead>
             <tr>
               <th>Imagem</th>
               <th>Jogo</th>
-              <th>Data</th>
+              <th>Descrição</th>
               <th>Valor</th>
+              <th>Data</th>
+              <th>Download</th>
             </tr>
           </thead>
           <tbody>
@@ -57,12 +57,23 @@ function MinhasCompras() {
                   <img
                     src={compra.game.imageUrl}
                     alt={compra.game.title}
-                    style={{ width: '80px' }}
+                    className={styles.thumb}
                   />
                 </td>
                 <td>{compra.game.title}</td>
-                <td>{new Date(compra.purchaseDate).toLocaleDateString()}</td>
+                <td>{compra.game.description}</td>
                 <td>R$ {compra.amount.toFixed(2)}</td>
+                <td>{new Date(compra.purchaseDate).toLocaleDateString()}</td>
+                <td>
+                  <a
+                    href={compra.game.gameFileUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={styles.downloadBtn}
+                  >
+                    Baixar
+                  </a>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -73,3 +84,4 @@ function MinhasCompras() {
 }
 
 export default MinhasCompras;
+

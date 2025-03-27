@@ -10,8 +10,8 @@ import LoginForm from './components/LoginForm/LoginForm';
 import RegisterForm from './components/RegisterForm/RegisterForm';
 import Dashboard from './components/Dashboard/Dashboard';
 import PrivateRoute from './routes/PrivateRoute';
-import Sucesso from './components/Pagamento/Sucesso';
-import Cancelado from './components/Pagamento/Cancelado'; // ⬅️ Importa o componente da página cancelada
+import Sucesso from './components/pagamento/Sucesso';
+import Cancelado from './components/pagamento/Cancelado'; // ⬅️ Importa o componente da página cancelada
 
 import Sobre from './components/Sobre/Sobre';
 import FAQ from './components/FAQ/FAQ';

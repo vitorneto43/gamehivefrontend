@@ -12,6 +12,7 @@ import Dashboard from './components/Dashboard/Dashboard';
 import PrivateRoute from './routes/PrivateRoute';
 import Sucesso from './components/Pagamento/Sucesso';
 import Cancelado from './components/Pagamento/Cancelado'; // ⬅️ Importa o componente da página cancelada
+import MinhasCompras from './components/MinhasCompras/MinhasCompras';
 
 import Sobre from './components/Sobre/Sobre';
 import FAQ from './components/FAQ/FAQ';
@@ -45,6 +46,7 @@ function App() {
               <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
               <Route path="/sucesso" element={<Sucesso />} />
               <Route path="/cancelado" element={<Cancelado />} /> {/* ⬅️ Adiciona aqui */}
+              <Route path="/minhas-compras" element={<MinhasCompras />} />
 
               <Route path="/sobre" element={<Sobre />} />
               <Route path="/faq" element={<FAQ />} />
@@ -64,6 +66,7 @@ function App() {
 }
 
 export default App;
+
 
 
 

@@ -1,0 +1,50 @@
+.header {
+    background-color: #111; /* Preto pro fundo */
+    color: #ccc; /* Texto cinza claro */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    border-bottom: 1px solid #333;
+  }
+  
+  .logo {
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .logo a {
+    color: #A020F0; /* Roxo */
+    text-decoration: none;
+  }
+  
+  .logo a:hover {
+    color: #ff00ff; /* Rosa neon no hover */
+  }
+  
+  .buttonsContainer {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .navButton,
+  .uploadButton,
+  .logoutButton {
+    background-color: #A020F0; /* Roxo */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+  
+  .navButton:hover,
+  .uploadButton:hover,
+  .logoutButton:hover {
+    background-color: #ff00ff; /* Rosa neon */
+    transform: translateY(-2px);
+  }
+  
+  

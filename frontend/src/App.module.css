@@ -1,0 +1,49 @@
+:root {
+    --primary-color: #8a2be2; /* Roxo vibrante */
+    --primary-hover: #6b1fbf;
+    --bg-dark: #111;
+    --bg-light: #222;
+    --text-color: #fff;
+    --text-muted: #aaa;
+  }
+  
+  .container {
+    background-color: var(--bg-dark);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Orbitron', sans-serif; /* Fonte futurista */
+  }
+  
+  .main {
+    flex: 1;
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    animation: fadeIn 0.5s ease-in;
+  }
+  
+  .title {
+    text-align: center;
+    font-size: 3rem;
+    margin-bottom: 40px;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    justify-items: center;
+    align-items: start;
+  }
+  
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  

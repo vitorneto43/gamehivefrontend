@@ -14,6 +14,8 @@ import Sucesso from './components/Pagamento/Sucesso';
 import Cancelado from './components/Pagamento/Cancelado'; // ⬅️ Importa o componente da página cancelada
 import MinhasCompras from './components/MinhasCompras/MinhasCompras';
 
+
+
 import Sobre from './components/Sobre/Sobre';
 import FAQ from './components/FAQ/FAQ';
 import Contato from './components/Contato/Contato';

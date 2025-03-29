@@ -9,47 +9,59 @@ function GameCard({ game, auth }) {
     return <p>Erro ao carregar jogo.</p>;
   }
 
-  const handleBuy = async () => {
-    if (!auth?.token) {
-      alert('⚠️ Você precisa estar logado para comprar!');
+ const handleBuy = async () => {
+  if (!auth?.token) {
+    alert('⚠️ Você precisa estar logado para comprar!');
+    return;
+  }
+
+  const cpf = prompt('Digite seu CPF (somente números) para gerar a cobrança:');
+  if (!cpf) {
+    alert('CPF obrigatório!');
+    return;
+  }
+
+  try {
+    const res = await fetch(`${API_URL}/asaas/cobrar`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${auth.token}`,
+      },
+      body: JSON.stringify({
+        name: auth.username || 'Usuário GameHive',
+        email: auth.email,
+        cpf,
+        value: game.price,
+        description: game.title,
+      }),
+    });
+
+    // 💡 Trate erro de resposta HTML (ex: rota não encontrada)
+    const contentType = res.headers.get('content-type');
+    if (!res.ok || !contentType.includes('application/json')) {
+      const text = await res.text();
+      console.error('❌ Resposta inválida da API:', text);
+      alert('Erro ao gerar cobrança. Verifique se o backend está funcionando.');
       return;
     }
-  
-    const cpf = prompt('Digite seu CPF (somente números) para gerar a cobrança:');
-    if (!cpf) {
-      alert('CPF obrigatório!');
-      return;
+
+    const data = await res.json();
+
+    if (data.link) {
+      console.log('🔗 Link da cobrança Asaas:', data.link);
+      window.location.href = data.link;
+    } else {
+      console.error('❌ Resposta inesperada:', data);
+      alert('Erro ao gerar link de pagamento!');
     }
-  
-    try {
-      const res = await fetch(`${API_URL}/asaas/cobrar`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${auth.token}`,
-        },
-        body: JSON.stringify({
-          name: auth.username || 'Usuário GameHive',
-          email: auth.email,
-          cpf,
-          value: game.price,
-          description: game.title,
-        }),
-      });
-  
-      const data = await res.json();
-  
-      if (data.link) {
-        console.log('🔗 Link da cobrança Asaas:', data.link);
-        window.location.href = data.link;
-      } else {
-        alert('Erro ao gerar link de pagamento!');
-      }
-    } catch (err) {
-      console.error('❌ Erro ao criar cobrança Asaas:', err);
-      alert('Erro ao iniciar pagamento!');
-    }
-  };
+
+  } catch (err) {
+    console.error('❌ Erro ao criar cobrança Asaas:', err);
+    alert('Erro ao iniciar pagamento!');
+  }
+};
+
   
   const imageUrl = game.imageUrl?.startsWith('http')
     ? game.imageUrl

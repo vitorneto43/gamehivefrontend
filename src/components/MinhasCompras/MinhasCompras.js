@@ -15,10 +15,15 @@ function MinhasCompras() {
         const res = await fetch(`${API_URL}/purchases/me`, {
           headers: { Authorization: `Bearer ${auth.token}` }
         });
+
+        if (!res.ok) {
+          throw new Error(`Erro ${res.status}: ${res.statusText}`);
+        }
+
         const data = await res.json();
         setCompras(data);
       } catch (err) {
-        console.error('❌ Erro ao buscar compras:', err);
+        console.error('❌ Erro ao buscar compras:', err.message);
       } finally {
         setLoading(false);
       }
@@ -32,31 +37,57 @@ function MinhasCompras() {
       <h2>🛒 Minhas Compras</h2>
 
       {loading ? (
-        <p>Carregando...</p>
+        <p>🔄 Carregando suas compras...</p>
       ) : compras.length === 0 ? (
         <p>Você ainda não comprou nenhum jogo.</p>
       ) : (
-        <div className={styles.lista}>
-          {compras.map((compra, index) => (
-            <div key={index} className={styles.card}>
-              <img src={compra.game.imageUrl} alt={compra.game.title} className={styles.image} />
-              <div className={styles.info}>
-                <h3>{compra.game.title}</h3>
-                <p>{compra.game.description}</p>
-                <p><strong>Valor:</strong> R$ {compra.amount.toFixed(2)}</p>
-                <p><strong>Data:</strong> {new Date(compra.purchaseDate).toLocaleDateString()}</p>
-                <a href={compra.game.gameFileUrl} target="_blank" rel="noopener noreferrer" className={styles.downloadButton}>
-                  ⬇️ Baixar Jogo
-                </a>
-              </div>
-            </div>
-          ))}
-        </div>
+        <table className={styles.tabela}>
+          <thead>
+            <tr>
+              <th>Imagem</th>
+              <th>Título</th>
+              <th>Descrição</th>
+              <th>Valor</th>
+              <th>Data</th>
+              <th>Download</th>
+            </tr>
+          </thead>
+          <tbody>
+            {compras.map((compra, index) => (
+              <tr key={index}>
+                <td>
+                  <img
+                    src={compra.game.imageUrl}
+                    alt={compra.game.title}
+                    className={styles.thumb}
+                    onError={(e) => (e.target.src = '/fallback.jpg')}
+                  />
+                </td>
+                <td>{compra.game.title}</td>
+                <td>{compra.game.description}</td>
+                <td>R$ {compra.amount.toFixed(2)}</td>
+                <td>{new Date(compra.purchaseDate).toLocaleDateString()}</td>
+                <td>
+                  <a
+                    href={compra.game.gameFileUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    download
+                    className={styles.downloadBtn}
+                  >
+                    ⬇️ Baixar
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       )}
     </div>
   );
 }
 
 export default MinhasCompras;
+
 
 
